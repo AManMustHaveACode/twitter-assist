@@ -1,0 +1,5 @@
+# 格式是id（指纹浏览器用户id）---email---token---dsid
+j29fdnd---wangwilliam@111.com---asdfasdffsadfasfs---01910193112
+
+#j2988op---wangwilliam@111.com---asdfasdffdsfacsazzzdfasfs---01910193111
+
