@@ -1,4 +1,3 @@
-max_process: 1 #最大进程数
 dingding_token: '' #向钉钉发送信息需要的token
 max_retry_times: 3 #最终重试次数，如果最终还是失败的话会钉钉通知;最小为1
 sleep_time: 2
