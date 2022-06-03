@@ -1,0 +1,12 @@
+url: https://twitter.com/nypost/status/1527134838083420160
+type: twitter
+to_follow: # 需要关注的用户
+  - espn
+  - edockterman
+  - nytimes
+
+reply: # 回复信息配置
+  tag_count: 3 # 需要@的用户数量
+  need_email: true #true代表需要，false代表不需要
+  need_token: true #true代表需要，false代表不需要
+  need_dsid: true #true代表需要，false代表不需要
