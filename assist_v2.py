@@ -33,8 +33,8 @@ class TwitterClickBot():
         self.browser.get(url)
         now_handle = self.browser.current_window_handle
         self.browser.switch_to.window(now_handle)
-        wait = WebDriverWait(self.browser, 5)
-        check_wait = WebDriverWait(self.browser, 3)
+        wait = WebDriverWait(self.browser, 8)
+        check_wait = WebDriverWait(self.browser, 4)
 
         retries = 1
         is_follow = False
@@ -60,7 +60,8 @@ class TwitterClickBot():
                 except TimeoutException as error:
                     print("in follow timeout exception")
                     retries += 1
-                    time.sleep(2 * random.random())
+                    # time.sleep(2 * random.random())
+                    time.sleep(1 * random.randrange(1,3))
                     # print(error)
                     self.browser.refresh()
                     continue
@@ -78,6 +79,7 @@ class TwitterClickBot():
                 except TimeoutException as error:
                     print("check follow timeout")
                     retries += 1
+                    time.sleep(1 * random.randrange(1,3))
                     self.browser.refresh()
                     # return_str += "follow failed, can't get unfollow"
         if not is_follow:
@@ -92,8 +94,8 @@ class TwitterClickBot():
         self.browser.get(url)
         now_handle = self.browser.current_window_handle
         self.browser.switch_to.window(now_handle)
-        wait = WebDriverWait(self.browser, 5)
-        check_wait = WebDriverWait(self.browser, 3)
+        wait = WebDriverWait(self.browser, 8)
+        check_wait = WebDriverWait(self.browser, 4)
         
         return_str = ""
 
@@ -118,7 +120,8 @@ class TwitterClickBot():
                     break
                 except TimeoutException as error:
                     retries += 1
-                    time.sleep(random.random())
+                    # time.sleep(random.random())
+                    time.sleep(1 * random.randrange(1,3))
                     print(error)
                     self.browser.refresh()
                     continue
@@ -135,7 +138,8 @@ class TwitterClickBot():
                 except TimeoutException as error:
                     print(error)
                     retries += 1
-                    time.sleep(random.random())
+                    # time.sleep(random.random())
+                    time.sleep(1 * random.randrange(1,3))
                     self.browser.refresh()
                     # return_str += "like failed, can't get unfollow button, the url is : %s " % url
                     # self.browser.close()
@@ -155,8 +159,8 @@ class TwitterClickBot():
             try:
                 retweet = wait.until(EC.element_to_be_clickable((By.XPATH, "(//div[@data-testid='primaryColumn']//article[@data-testid='tweet'])[1]//div[@data-testid='%s']" % "retweet")))  # 注意中英文  关注 -- follow
                 retweet.click()
-                time.sleep(random.random())
-                # time.sleep(1 * random.randrange(1,3))
+                # time.sleep(random.random())
+                time.sleep(1 * random.randrange(1,3))
                 
                 menu = wait.until(EC.presence_of_element_located((By.XPATH, "(//div[@data-testid='retweetConfirm'])")))
                 menu.click()
@@ -223,7 +227,7 @@ class TwitterClickBot():
             except Exception as error:
                 print(error)
                 retries += 1
-                time.sleep(random.random())
+                time.sleep(1 * random.randrange(1,3))
                 self.browser.refresh()
                 continue
                         
@@ -320,7 +324,7 @@ class AdsHelper():
                 session = requests.Session()
                 session.trust_env = False
                 res = session.get(url)
-                print("ads log ***********************")
+                print("**************** ads log ***********************")
                 print(res)
                 print(res.content)
                 resp = res.json()
@@ -330,7 +334,7 @@ class AdsHelper():
                     print("ads interface resp msg: %s" % resp["msg"])
                     print("please check ads_id")
                     retries += 1
-                    time.sleep(1 * random.randrange(1, self.sleep))
+                    time.sleep(2 * random.randrange(1, self.sleep))
                     continue
                 webdriver_location = resp["data"].get("webdriver")
                 selenium_server = resp["data"]["ws"]["selenium"]
@@ -341,7 +345,7 @@ class AdsHelper():
                 print(error)
                 retries += 1
                 print("ads start failed, wait to retry")
-                time.sleep(1 * random.randrange(1, self.sleep))
+                time.sleep(2 * random.randrange(1, self.sleep))
         print("ads user: %s has start error,  please check!!!!!!!!" % ads_user) 
         return False
         
@@ -364,7 +368,7 @@ class AdsHelper():
             sys.exit(1)
 
     def is_active(self, ads_user):
-        print("in active judge ***********")
+        print("************ in active judge ***********")
         retries = 0
         while retries <= self.max_retries:
             print("ads active start try count: %s " % retries)
@@ -488,14 +492,12 @@ class ConfigUtils():
                 line = line.strip()
                 try:
                     line_splits = line.split("---")
-                    print(type(line_splits))
-                    print(type(line_splits[0]))
                     ads_account_dict.update({line_splits[0]: [line_splits[1], line_splits[2], line_splits[3]]})
                 except Exception as error:
                     print(error)
                     print("accounts.txt config error, please check!!!!!!")
                     time.sleep(100)
-                    sys.exit(3)
+                    sys.exit(1)
                     
         return  ads_account_dict
 
@@ -520,7 +522,7 @@ class ConfigUtils():
             print(error)
             print("load config failed, please check!!!")
             time.sleep(200)
-            sys.exit(2)
+            sys.exit(1)
         return data
         
 
@@ -561,8 +563,8 @@ class MainExecTask():
         dingding_token = self.config_data.get("dingding_token")
         dingutil = DingdingUtils(dingding_token)
 
-        all_tasks_error = ""  # 正确的
-        all_tasks_str = ""    # 错误的
+        # all_tasks_error = ""  # 正确的
+        # all_tasks_str = ""    # 错误的
 
         for file_name in all_files:  # 所有用户做完一个task，再做下一个
             single_task_error = ""
@@ -582,10 +584,10 @@ class MainExecTask():
                 single_task_error += "task: %s has open error, check the encoding and task file's config;  " % file_name
                 continue
             
-            print("Now task name is : %s ~~~~~~~~~~" % file_name)
+            print("~~~~~~~~~~~Now task name is : %s ~~~~~~~~~~" % file_name)
             try:
                 for ads_user in all_ads_users:
-                    print("Now user: %s is doing task: %s ~~~~~~~~" % (ads_user, file_name))
+                    print("~~~~~~~~~~~~Now user: %s is doing task: %s ~~~~~~~~" % (ads_user, file_name))
                     try:
                         twitter_bot = self.adshelper.ads_twitter_helper(ads_user)
                     except Exception as error:
@@ -665,20 +667,27 @@ class MainExecTask():
                 single_task_error += "ads users exec got unexpected error : %s, in task: %s; try next task " % (ads_user, file_name)
                 continue
 
-            single_task_str += "Twitter assist msg:\n  task: %s exec completed end, succ count is: %s ~~~~~~~~, failed count is: %s ~~~~~~~~~~\n" % (file_name, succ_count, failed_count)
+            single_task_str += "Twitter assist 结果:\n  任务名: %s 全部执行完毕, 成功用户数量: %s ~~~~~~~~, 失败用户数量: %s ~~~~~~~~~~\n" % (file_name, succ_count, failed_count)
             if single_task_error:
-                single_task_str += "failed msg detail is : %s .....................\n" % single_task_error
-            print("Task all user completed, all msg is: %s " % single_task_str)
+                single_task_str += "  失败用户详情 : %s .....................\n" % single_task_error
+            print("this task all user exec completed, all msg is: %s " % single_task_str)
             dingutil.send_dingding_msg(single_task_str)  # 一个task一个dingding  msg
+            print("=============================================================\n")
+            time.sleep(2 * random.randrange(1, sleep_time))
 
 
 
 if __name__ == "__main__":
-    main_task = MainExecTask()
-    main_task.exec_task()
-    time.sleep(200)
-
-    # TODO reply 检查的时候，xpath带引号的判断    
+    final_day = datetime.strptime("2022-06-09", "%Y-%m-%d")
+    now_day = datetime.now()
+    if now_day > final_day:
+        print("The trial period for this product has expired, existing......")
+        time.sleep(500)
+        sys.exit(1)
+    else:
+        main_task = MainExecTask()
+        main_task.exec_task()
+        time.sleep(200)
 
         
 
