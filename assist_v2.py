@@ -33,8 +33,8 @@ class TwitterClickBot():
         self.browser.get(url)
         now_handle = self.browser.current_window_handle
         self.browser.switch_to.window(now_handle)
-        wait = WebDriverWait(self.browser, 8)
-        check_wait = WebDriverWait(self.browser, 4)
+        wait = WebDriverWait(self.browser, 6)
+        check_wait = WebDriverWait(self.browser, 3)
 
         retries = 1
         is_follow = False
@@ -60,8 +60,8 @@ class TwitterClickBot():
                 except TimeoutException as error:
                     print("in follow timeout exception")
                     retries += 1
-                    # time.sleep(2 * random.random())
-                    time.sleep(1 * random.randrange(1,3))
+                    time.sleep(2 * random.random())
+                    # time.sleep(1 * random.randrange(1,3))
                     # print(error)
                     self.browser.refresh()
                     continue
@@ -94,8 +94,8 @@ class TwitterClickBot():
         self.browser.get(url)
         now_handle = self.browser.current_window_handle
         self.browser.switch_to.window(now_handle)
-        wait = WebDriverWait(self.browser, 8)
-        check_wait = WebDriverWait(self.browser, 4)
+        wait = WebDriverWait(self.browser, 6)
+        check_wait = WebDriverWait(self.browser, 3)
         
         return_str = ""
 
@@ -120,8 +120,8 @@ class TwitterClickBot():
                     break
                 except TimeoutException as error:
                     retries += 1
-                    # time.sleep(random.random())
-                    time.sleep(1 * random.randrange(1,3))
+                    time.sleep(random.random())
+                    # time.sleep(1 * random.randrange(1,3))
                     print(error)
                     self.browser.refresh()
                     continue
@@ -138,8 +138,8 @@ class TwitterClickBot():
                 except TimeoutException as error:
                     print(error)
                     retries += 1
-                    # time.sleep(random.random())
-                    time.sleep(1 * random.randrange(1,3))
+                    time.sleep(random.random())
+                    # time.sleep(1 * random.randrange(1,3))
                     self.browser.refresh()
                     # return_str += "like failed, can't get unfollow button, the url is : %s " % url
                     # self.browser.close()
@@ -176,6 +176,7 @@ class TwitterClickBot():
                 except Exception as error:
                     print(error)
                     retries += 1
+                    time.sleep(random.random())
                     self.browser.refresh()
                     continue
             if not retweet_succ:
@@ -186,7 +187,8 @@ class TwitterClickBot():
                     break
                 except Exception as error:
                     print(error)
-                    time.sleep(1 * random.randrange(1,3))
+                    time.sleep(random.random())
+                    # time.sleep(1 * random.randrange(1,3))
                     retries += 1
                     self.browser.refresh()
                 
@@ -227,7 +229,8 @@ class TwitterClickBot():
             except Exception as error:
                 print(error)
                 retries += 1
-                time.sleep(1 * random.randrange(1,3))
+                time.sleep(random.random())
+                # time.sleep(1 * random.randrange(1,3))
                 self.browser.refresh()
                 continue
                         

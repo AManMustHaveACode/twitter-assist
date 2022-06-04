@@ -2,7 +2,6 @@ url: https://twitter.com/nypost/status/1527134838083420160
 type: twitter
 to_follow: # 需要关注的用户
   - espn
-  - edockterman
   - nytimes
 
 reply: # 回复信息配置
