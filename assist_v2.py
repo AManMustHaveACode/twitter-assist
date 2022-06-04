@@ -216,7 +216,7 @@ class TwitterClickBot():
             # check reply succ
             try:
                 print("Check is reply text: %s  ,,,,,, in span " % reply_0)
-                check_reply = check_wait.until(EC.presence_of_element_located((By.XPATH, '''//div[@data-testid='primaryColumn']//div[@data-testid='cellInnerDiv']//article[@data-testid='tweet']//span[contains(text(), '%s')]''' % reply_0)))
+                check_reply = check_wait.until(EC.presence_of_element_located((By.XPATH, '''//div[@data-testid='primaryColumn']//div[@data-testid='cellInnerDiv']//article[@data-testid='tweet']//span[contains(text(), "%s")]''' % reply_0)))
                 print("reply check succ!!!!!!!!!")
                 reply_succ = True
                 break
@@ -678,7 +678,7 @@ if __name__ == "__main__":
     main_task.exec_task()
     time.sleep(200)
 
-    # TODO reply 检查的时候，xpath带引号的判断
+    # TODO reply 检查的时候，xpath带引号的判断    
 
         
 
