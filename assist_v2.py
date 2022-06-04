@@ -350,6 +350,7 @@ class AdsHelper():
                 print("ads start failed, wait to retry")
                 time.sleep(2 * random.randrange(1, self.sleep))
         print("ads user: %s has start error,  please check!!!!!!!!" % ads_user) 
+        time.sleep(10)
         return False
         
 
@@ -483,25 +484,30 @@ class ConfigUtils():
             print(reply_dir)
         else:
             reply_dir = "./accounts.txt"
-        with open(reply_dir, encoding='utf-8') as all_accounts:
-            while True:
-                line = all_accounts.readline()
-                if line.startswith("#"):
-                    continue
-                
-                if not line or line == "\n":
-                    print("read complete")
-                    break
-                line = line.strip()
-                try:
-                    line_splits = line.split("---")
-                    ads_account_dict.update({line_splits[0]: [line_splits[1], line_splits[2], line_splits[3]]})
-                except Exception as error:
-                    print(error)
-                    print("accounts.txt config error, please check!!!!!!")
-                    time.sleep(100)
-                    sys.exit(1)
+        try:
+            with open(reply_dir, encoding='utf-8') as all_accounts:
+                while True:
+                    line = all_accounts.readline()
+                    if line.startswith("#"):
+                        continue
                     
+                    if not line or line == "\n":
+                        print("read complete")
+                        break
+                    line = line.strip()
+                    try:
+                        line_splits = line.split("---")
+                        ads_account_dict.update({line_splits[0]: [line_splits[1], line_splits[2], line_splits[3]]})
+                    except Exception as error:
+                        print(error)
+                        print("accounts.txt config error, please check!!!!!!")
+                        time.sleep(100)
+                        sys.exit(1)
+        except Exception as error:
+            print(error)
+            print("accounts.txt config error, please check!!!!!!")
+            time.sleep(100)
+            sys.exit(1)
         return  ads_account_dict
 
     @staticmethod
