@@ -625,7 +625,8 @@ class MainExecTask():
                         follow_succ = True
                         time.sleep(random.randint(1, sleep_time))
                     
-                    if not follow_succ:
+                    print(follow_users)
+                    if follow_users and not follow_succ:  # 处理一下没有folllow的情况
                         failed_count += 1  # 一个follow失败，用户的这个task即视为失败，失败数加1
                         print("follow has error, exec next ads user")
                         continue
